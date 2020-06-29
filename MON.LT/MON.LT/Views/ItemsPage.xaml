@@ -13,7 +13,10 @@
     </ContentPage.ToolbarItems>
 
     <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}">
-        <CollectionView x:Name="ItemsCollectionView"
+        <CollectionView x:Name="ItemsCollectionView" 
+                        RemainingItemsThreshold="5" 
+                        RemainingItemsThresholdReached="OnCollectionViewRemainingItemsThresholdReached"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreDataCommand}"
                 ItemsSource="{Binding Items}">
             <d:CollectionView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">

@@ -13,31 +13,40 @@ namespace MON.LT.Services
     public class MockDataStore : IDataStore<Item>
     {
         //List<Item> items;
-        readonly List<Item> items;
+        List<Item> items;
         public MockDataStore()
         {
             items = new List<Item>();
             
-            ProductFactory productFactory = new ProductFactory(AppConfig.BaseUrl, AppConfig.Account, AppConfig.Password);
-            ImageFactory imageFactory = new ImageFactory(AppConfig.BaseUrl, AppConfig.Account, AppConfig.Password);
+            //ProductFactory productFactory = new ProductFactory(AppConfig.BaseUrl, AppConfig.Account, AppConfig.Password);
+            //ImageFactory imageFactory = new ImageFactory(AppConfig.BaseUrl, AppConfig.Account, AppConfig.Password);
 
-            Dictionary<string, string> filter = new Dictionary<string, string>();
-            filter.Add("id", "[1,10]");
+            //Dictionary<string, string> filter = new Dictionary<string, string>();
+            //filter.Add("id", "[1,10]");
             
-            List<product> itemsx = productFactory.GetByFilter(filter, null, null);
+            //List<product> itemsx = productFactory.GetByFilter(filter, null, null);
 
-            items = itemsx.Select(x => new Item()
-            { id = unchecked((int)x.id), name = x.name[0].Value, reference = x.reference, imageId = Convert.ToInt32(x.id_default_image) }).ToList();
+            //items = itemsx.Select(x => new Item()
+            //{ id = unchecked((int)x.id), name = x.name[0].Value, reference = x.reference, imageId = Convert.ToInt32(x.id_default_image) }).ToList();
             
-            for (int i = 0; i < items.Count; i++)
-            {
-                    items[i].image = imageFactory.GetProductImage(items[i].id, items[i].imageId);
-            }
-        
+            //for (int i = 0; i < items.Count; i++)
+            //{
+            //        items[i].image = imageFactory.GetProductImage(items[i].id, items[i].imageId);
+            //}
         }
 
- 
 
+        public async Task LoadMoreItems()
+        {
+            ProductFactory productFactory = new ProductFactory(AppConfig.BaseUrl, AppConfig.Account, AppConfig.Password);
+            Dictionary<string, string> filter = new Dictionary<string, string>();
+            filter.Add("id", "[1,10]");
+            List<product> itemsx = await productFactory.GetByFilterAsync(filter, null, null);
+            items = itemsx.Select(x => new Item()
+            { id = Convert.ToInt32(x.id), name = x.name[0].Value, reference = x.reference, imageId = Convert.ToInt32(x.id_default_image) }).ToList();
+            //return await productFactory.GetByFilterAsync(filter,null,null);
+
+        }
         public async Task<bool> AddItemAsync(Item item)
         {
             items.Add(item);

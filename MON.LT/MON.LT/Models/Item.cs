@@ -9,5 +9,6 @@ namespace MON.LT.Models
         public string reference { get; set; }
         public int imageId { get; set; }
         public byte[] image { get; set; }
+        public byte[] imagehumbnail { get; set; }
     }
 }

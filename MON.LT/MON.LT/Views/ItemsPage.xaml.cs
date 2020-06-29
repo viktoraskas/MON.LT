@@ -46,5 +46,10 @@ namespace MON.LT.Views
             if (viewModel.Items.Count == 0)
                 viewModel.IsBusy = true;
         }
+
+        private void OnCollectionViewRemainingItemsThresholdReached(object sender, EventArgs e)
+        {
+            //
+        }
     }
 }

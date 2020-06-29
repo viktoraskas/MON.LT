@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Bukimedia.PrestaSharp.Entities;
 
 namespace MON.LT.Services
 {
@@ -13,5 +14,6 @@ namespace MON.LT.Services
         Task<T> GetItemAsync(int id);
         Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
         Task<byte[]> GetImageAsync(Item item);
+        Task LoadMoreItems();
     }
 }
