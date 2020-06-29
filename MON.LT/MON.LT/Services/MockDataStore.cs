@@ -6,6 +6,7 @@ using MON.LT.Models;
 using Bukimedia.PrestaSharp.Factories;
 using Bukimedia.PrestaSharp.Entities;
 using Xamarin.Forms;
+using MON.LT.Configuration;
 
 namespace MON.LT.Services
 {
@@ -16,15 +17,13 @@ namespace MON.LT.Services
         public MockDataStore()
         {
             items = new List<Item>();
-
-            string BaseUrl = "https://mon.lt/api";
-            string Account = "";
-            string Password = "";
-            ProductFactory productFactory = new ProductFactory(BaseUrl, Account, Password);
-            ImageFactory imageFactory = new ImageFactory(BaseUrl, Account, Password);
+            
+            ProductFactory productFactory = new ProductFactory(AppConfig.BaseUrl, AppConfig.Account, AppConfig.Password);
+            ImageFactory imageFactory = new ImageFactory(AppConfig.BaseUrl, AppConfig.Account, AppConfig.Password);
 
             Dictionary<string, string> filter = new Dictionary<string, string>();
             filter.Add("id", "[1,10]");
+            
             List<product> itemsx = productFactory.GetByFilter(filter, null, null);
 
             items = itemsx.Select(x => new Item()
@@ -71,6 +70,12 @@ namespace MON.LT.Services
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(items);
+        }
+
+        public async Task<byte []> GetImageAsync(Item item)
+        {
+            ImageFactory imageFactory = new ImageFactory(AppConfig.BaseUrl, AppConfig.Account, AppConfig.Password);
+            return await imageFactory.GetProductImageAsync(item.id, item.imageId);
         }
     }
 }

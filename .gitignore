@@ -338,3 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/MON.LT/MON.LT/Configuration/AppConfig.cs

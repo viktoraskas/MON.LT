@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MON.LT.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,5 +12,6 @@ namespace MON.LT.Services
         Task<bool> DeleteItemAsync(int id);
         Task<T> GetItemAsync(int id);
         Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
+        Task<byte[]> GetImageAsync(Item item);
     }
 }
